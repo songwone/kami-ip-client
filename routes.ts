@@ -3,9 +3,9 @@
  * @version:
  * @Author: songone
  * @Date: 2022-10-16 16:21:46
- * @LastEditors: songone
- * @LastEditTime: 2022-10-23 15:52:39
- * @FilePath: \kami-ip-management\routes.ts
+ * @LastEditors: one
+ * @LastEditTime: 2023-04-10 23:34:50
+ * @FilePath: \kami-ip-client\routes.ts
  */
 export default [
   {
@@ -32,7 +32,6 @@ export default [
     title: 'recharge.title',
     name: 'recharge',
     path: '/recharge',
-    component: './Recharge',
     routes: [
       {
         title: 'recharge.title',
@@ -41,9 +40,14 @@ export default [
         component: './Recharge',
       },
       {
-        name: '充值记录',
+        title: 'rechargeList.title',
+        name: 'rechargeList',
         path: 'list',
         component: './Recharge/list',
+      },
+      {
+        path: '',
+        redirect: '/recharge/index',
       },
     ],
   },
@@ -68,17 +72,20 @@ export default [
     title: 'agent.title',
     name: 'agent',
     path: '/agent',
-    routes: [
-      {
-        name: 'build',
-        path: 'build',
-        component: './Agent/build',
-      },
-      {
-        name: 'subAccount',
-        path: 'list',
-        component: './Agent/sub-account',
-      },
-    ],
+    component: './Agent/build',
+    // routes: [
+    //   {
+    //     title: 'buildAgent.title',
+    //     name: 'buildAgent',
+    //     path: 'build',
+    //     component: './Agent/build',
+    //   },
+    //   {
+    //     title: 'subAccount.title',
+    //     name: 'subAccount',
+    //     path: 'sub-account',
+    //     component: './Agent/sub-account',
+    //   },
+    // ],
   },
 ];

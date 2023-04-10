@@ -3,12 +3,13 @@
  * @version:
  * @Author: songone
  * @Date: 2022-10-23 19:21:18
- * @LastEditors: songone
- * @LastEditTime: 2022-10-23 21:54:14
- * @FilePath: \kami-ip-management\src\pages\Recharge\components\pay.tsx
+ * @LastEditors: one
+ * @LastEditTime: 2023-04-10 23:47:22
+ * @FilePath: \kami-ip-client\src\pages\Recharge\components\pay.tsx
  */
 import { useEffect, useState } from 'react';
 import { getOrderStatus } from '@/api/process';
+import erCodeImage from '@/assets/images/ercode.jpg';
 
 export type PropsType = {
   orderInfo?: any;
@@ -45,7 +46,15 @@ const Pay: React.FC<PropsType> = (props) => {
     };
   }, []);
   const timerStr = () => {
-    return Math.floor(time / 60) + ':' + (time % 60);
+    let s: number | string = Math.floor(time % 60);
+    let m: number | string = Math.round(time / 60);
+    if (s < 10) {
+      s = '0' + s;
+    }
+    if (m < 10) {
+      m = '0' + m;
+    }
+    return m + ':' + s;
   };
   return (
     <div className="pay-component">
@@ -55,7 +64,7 @@ const Pay: React.FC<PropsType> = (props) => {
       <div className="money-row">金额： {orderInfo.amount} USDT</div>
       <div className="type-row">类型：TRC20</div>
       <div className="ercode-img">
-        <img src="" alt="" />
+        <img src={erCodeImage} alt="" />
       </div>
       <div className="pay-tips">
         注意：充值类型和金额必须准确，否则充值不成功!

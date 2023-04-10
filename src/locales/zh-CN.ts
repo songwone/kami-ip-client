@@ -35,4 +35,7 @@ export default {
   'home.title': '首页',
   'agent.title': '代理',
   'recharge.title': '充值',
+  'buildAgent.title': '生成代理',
+  'subAccount.title': '子账户管理',
+  'rechargeList.title': '充值记录',
 };

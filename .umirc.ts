@@ -28,4 +28,5 @@ export default defineConfig({
     baseSeparator: '-',
     title: true,
   },
+  scripts: ['dist/clipboard.min.js'],
 });

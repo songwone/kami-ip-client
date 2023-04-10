@@ -1,48 +1,72 @@
-import React, { useEffect } from 'react';
-import { Table, TableColumnsType } from 'antd';
-import { useIntl } from '@umijs/max';
+import React, { useEffect, useState } from 'react';
+import { Table, TableColumnsType, PaginationProps } from 'antd';
+import { useIntl, useModel } from '@umijs/max';
 import { StatisticCard } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-components';
-import { getUserInfo } from '@/api/user';
+import { getCountryStatistic } from '@/api/statistic';
 import WithAuth from '@/components/withAuth';
-// import { useModel } from '@umijs/max';
-// const { Statistic } = StatisticCard;
+
 const HomePage: React.FC = () => {
-  // const { name } = useModel('global');
+  const {
+    user: { ipTotal, increaseIp, balance },
+  } = useModel('user');
   const intl = useIntl();
+  const [countryListData, setCountryListData] = useState({
+    rows: [] as any,
+    total: 0,
+  });
+  const [postForm, setPostForm] = useState({
+    pageNo: 1,
+    pageSize: 10,
+    codeType: 1,
+  });
 
   const getData = async () => {
     try {
-      const result = await getUserInfo();
+      const result = await getCountryStatistic(postForm);
       console.log('🚀 ~ file: index.tsx:16 ~ getData ~ result:', result);
+      setCountryListData(result.data);
     } catch (error) {}
   };
 
   useEffect(() => {
     getData();
-  });
-
+  }, [postForm]);
+  const pagination: PaginationProps = {
+    total: countryListData.total,
+    pageSize: postForm.pageSize,
+    current: postForm.pageNo,
+    onChange(page, pageSize) {
+      setPostForm({
+        ...postForm,
+        pageNo: page,
+        pageSize: pageSize || 10,
+      });
+    },
+    showSizeChanger: false,
+    showQuickJumper: true,
+  };
   const columns: TableColumnsType<any> = [
     {
-      dataIndex: 'con',
+      dataIndex: 'countryCn',
       title: intl.formatMessage({
         id: 'Country',
       }),
     },
     {
-      dataIndex: 'code',
+      dataIndex: 'countryCode',
       title: intl.formatMessage({
         id: 'Code',
       }),
     },
     {
-      dataIndex: 'ipNumber',
+      dataIndex: 'ipCount',
       title: intl.formatMessage({
         id: 'NumberOfIPs',
       }),
     },
     {
-      dataIndex: 'status',
+      dataIndex: 'networkStatus',
       title: intl.formatMessage({
         id: 'NetworkStatus',
       }),
@@ -56,7 +80,7 @@ const HomePage: React.FC = () => {
             title: intl.formatMessage({
               id: 'TotalDynamicResidentialIP',
             }),
-            value: 601986875,
+            value: ipTotal,
           }}
         />
         <StatisticCard
@@ -64,7 +88,7 @@ const HomePage: React.FC = () => {
             title: intl.formatMessage({
               id: 'NewDayNewQualityIP',
             }),
-            value: 3701928,
+            value: increaseIp || 0,
             // description: <Statistic title="占比" value="61.5%" />,
           }}
           chartPlacement="left"
@@ -74,13 +98,20 @@ const HomePage: React.FC = () => {
             title: intl.formatMessage({
               id: 'AccountBalance',
             }),
-            value: 1806062,
+            value: balance,
             // description: <Statistic title="占比" value="38.5%" />,
           }}
           chartPlacement="left"
         />
       </StatisticCard.Group>
-      <Table columns={columns} style={{ marginTop: 20 }}></Table>
+      <Table
+        columns={columns}
+        dataSource={countryListData.rows}
+        style={{ marginTop: 20 }}
+        pagination={pagination}
+        size="small"
+        bordered
+      ></Table>
     </PageContainer>
   );
 };

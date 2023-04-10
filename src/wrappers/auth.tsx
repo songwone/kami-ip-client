@@ -1,10 +1,10 @@
 import React from 'react';
-import { Navigate, Outlet, useModel } from 'umi';
+import { Navigate, Outlet } from 'umi';
 import { getToken } from '@/utils/auth';
 
 export default () => {
-  const { user } = useModel('userModel');
-  console.log('🚀 ~ file: auth.tsx:7 ~ user:', user);
+  // const { user } = useModel('userModel');
+  // console.log('🚀 ~ file: auth.tsx:7 ~ user:', user);
   const token = getToken();
   if (token) {
     return <Outlet />;

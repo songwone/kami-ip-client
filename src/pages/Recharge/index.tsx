@@ -3,11 +3,11 @@
  * @version:
  * @Author: songone
  * @Date: 2022-10-16 16:47:17
- * @LastEditors: songone
- * @LastEditTime: 2022-10-23 21:53:02
- * @FilePath: \kami-ip-management\src\pages\Recharge\index.tsx
+ * @LastEditors: one
+ * @LastEditTime: 2023-04-10 23:27:06
+ * @FilePath: \kami-ip-client\src\pages\Recharge\index.tsx
  */
-import { Button, Steps } from 'antd';
+import { Button, Steps, Row, Col } from 'antd';
 import { PageContainer } from '@ant-design/pro-components';
 import { useEffect, useState } from 'react';
 import WithAuth from '@/components/withAuth';
@@ -89,34 +89,35 @@ const RechargePage: React.FC = () => {
 
   return (
     <PageContainer className="page-container" ghost>
-      <div style={{ paddingBottom: 20 }}>
-        <Steps current={current}>
-          <Steps.Step title={intl.formatMessage({ id: 'ChooseAPackage' })} />
-          <Steps.Step title={intl.formatMessage({ id: 'Recharge' })} />
-          <Steps.Step title={intl.formatMessage({ id: 'Finish' })} />
-        </Steps>
-      </div>
-      {current === 0 && (
-        <div className="product-list">
-          {packageList.map((product: any, index: number) => (
-            <div key={index} className="product-card">
-              <div className="product-name">{product.packageDesc}</div>
-              {/* <div className="product-flow"><FormattedMessage id="Flow"></FormattedMessage>: {product.flow}GB</div> */}
-              <div className="product-price">{product.packageAmount} $</div>
-              <div className="product-desc">
-                <FormattedMessage id="DynamicResidentialIP"></FormattedMessage>(
-                <FormattedMessage id="Country"></FormattedMessage>)
-                <br />
-                {product.rranUnitPrice} $/G
-              </div>
-              <div className="product-desc">
-                <FormattedMessage id="DynamicResidentialIP"></FormattedMessage>(
-                <FormattedMessage id="CountryAndRegion"></FormattedMessage>)
-                <br />
-                {product.rracUnitPrice} $/G
-              </div>
-              <div className="handle-wrap">
-                {/* {index === current ? (
+      <div style={{ margin: '0 auto' }}>
+        <div style={{ padding: '20px' }}>
+          <Steps current={current}>
+            <Steps.Step title={intl.formatMessage({ id: 'ChooseAPackage' })} />
+            <Steps.Step title={intl.formatMessage({ id: 'Recharge' })} />
+            <Steps.Step title={intl.formatMessage({ id: 'Finish' })} />
+          </Steps>
+        </div>
+        {current === 0 && (
+          <div className="product-list">
+            {packageList.map((product: any, index: number) => (
+              <div key={index} className="product-card">
+                <div className="product-name">{product.packageDesc}</div>
+                {/* <div className="product-flow"><FormattedMessage id="Flow"></FormattedMessage>: {product.flow}GB</div> */}
+                <div className="product-price">{product.packageAmount} $</div>
+                <div className="product-desc">
+                  <FormattedMessage id="DynamicResidentialIP"></FormattedMessage>
+                  (<FormattedMessage id="Country"></FormattedMessage>)
+                  <br />
+                  {product.rranUnitPrice} $/G
+                </div>
+                <div className="product-desc">
+                  <FormattedMessage id="DynamicResidentialIP"></FormattedMessage>
+                  (<FormattedMessage id="CountryAndRegion"></FormattedMessage>)
+                  <br />
+                  {product.rracUnitPrice} $/G
+                </div>
+                <div className="handle-wrap">
+                  {/* {index === current ? (
                 <Button size="middle" disabled type="primary">
                   已选择
                 </Button>
@@ -129,28 +130,29 @@ const RechargePage: React.FC = () => {
                   选择这个
                 </Button>
               )} */}
-                <Button
-                  loading={loading}
-                  type="primary"
-                  onClick={() => handleSubmit(product)}
-                >
-                  <FormattedMessage id="Buy"></FormattedMessage>
-                  {product.discount && '(' + product.discount * 100 + '%)'}
-                </Button>
+                  <Button
+                    loading={loading}
+                    type="primary"
+                    onClick={() => handleSubmit(product)}
+                    size="large"
+                  >
+                    <FormattedMessage id="Buy"></FormattedMessage>
+                    {product.discount && '(' + product.discount * 100 + '%)'}
+                  </Button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
-      {current === 1 && (
-        <Pay orderInfo={orderInfo} onSuccess={handleSuccess}></Pay>
-      )}
-      {current === 2 && (
-        <div style={{ padding: 50, textAlign: 'center', fontSize: 24 }}>
-          <FormattedMessage id="RechargedSuccessfully"></FormattedMessage>
-        </div>
-      )}
-      {/* <Row style={{ marginTop: 30 }}>
+            ))}
+          </div>
+        )}
+        {current === 1 && (
+          <Pay orderInfo={orderInfo} onSuccess={handleSuccess}></Pay>
+        )}
+        {current === 2 && (
+          <div style={{ padding: 50, textAlign: 'center', fontSize: 24 }}>
+            <FormattedMessage id="RechargedSuccessfully"></FormattedMessage>
+          </div>
+        )}
+        {/* <Row style={{ marginTop: 30 }}>
         <Col span={6}>
           <Form>
             <Form.Item label="选择城市">
@@ -164,6 +166,27 @@ const RechargePage: React.FC = () => {
           </Form>
         </Col>
       </Row> */}
+        <Row>
+          <Col className="show-slogan" span={8}>
+            2000w+住宅IP
+          </Col>
+          <Col className="show-slogan" span={8}>
+            城市级定位
+          </Col>
+          <Col className="show-slogan" span={8}>
+            自定义会话时长
+          </Col>
+          <Col className="show-slogan" span={8}>
+            最简接入
+          </Col>
+          <Col className="show-slogan" span={8}>
+            高速响应
+          </Col>
+          <Col className="show-slogan" span={8}>
+            24/7 在线支持
+          </Col>
+        </Row>
+      </div>
     </PageContainer>
   );
 };

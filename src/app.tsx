@@ -73,6 +73,12 @@ export const layout: RunTimeLayoutConfig = () => {
     footerRender: () => <Footer />,
     rightRender: (initialState: any) => <Header state={initialState}></Header>,
     layout: 'top',
-    fixedHeader: true,
+    fixedHeader: false,
+    contentStyle: {
+      background: '#FFFFFF',
+      width: 1200,
+      margin: 'auto',
+      paddingBottom: 30,
+    },
   };
 };

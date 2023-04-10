@@ -3,9 +3,9 @@
  * @version:
  * @Author: songone
  * @Date: 2022-10-29 14:31:59
- * @LastEditors: songone
- * @LastEditTime: 2022-10-29 14:33:01
- * @FilePath: \kami-ip-management\src\api\process.ts
+ * @LastEditors: one
+ * @LastEditTime: 2023-04-06 21:58:33
+ * @FilePath: \kami-ip-client\src\api\process.ts
  */
 import { request } from '@umijs/max';
 
@@ -16,9 +16,9 @@ export const addRecharge = (packageCode: any) =>
     method: 'get',
   });
 
-// 充值余额
+// 充值记录
 export const getRechargeRecord = (params: any) =>
-  request('/light-ip/user/login', { params, method: 'get' });
+  request('/light-ip/recharge/query', { params, method: 'get' });
 
 // 创建订单
 export const createOrder = (data: {
@@ -50,3 +50,15 @@ export const getOrderStatus = (rechargeNo: string) =>
     method: 'get',
     params: { rechargeNo },
   });
+
+// 获取代理国家/州/城市
+export const getCountryList = (params: {
+  codeType: number;
+  countryCode?: string;
+}) => request('/light-ip/account/getCountryList', { params, method: 'get' });
+
+// 获取代理单价
+export const getAgentPrice = (params: {
+  codeType: number;
+  countryCode?: string;
+}) => request('/light-ip/account/getAgentPrice', { params, method: 'get' });
